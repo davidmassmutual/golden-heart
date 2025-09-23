@@ -1,0 +1,33 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: #FFD700;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.logo img {
+  height: 50px;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.5rem;
+}
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+nav a.active {
+  color: #C8102E;
+  border-bottom: 2px solid #C8102E;
+}
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+    display: none; /* Add toggle for mobile */
+  }
+}

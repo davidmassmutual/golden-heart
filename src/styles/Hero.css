@@ -1,0 +1,23 @@
+.hero {
+  height: 60vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+}
+.hero-content {
+  background: rgba(0, 0, 0, 0.5);
+  padding: 2rem;
+  border-radius: 8px;
+}
+.cta-button {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #C8102E;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+}
