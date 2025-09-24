@@ -7,7 +7,8 @@ import img3 from '../images/orph3.png';
 import img6 from '../images/orph6.jpg';
 import img7 from '../images/orph7.jpeg';
 import img8 from '../images/orph8.jpeg';
-import imgHero from '../images/24966_l.jpg';
+import imgHero from '../images/orph9.jpg';
+
 
 
 function Home() {
