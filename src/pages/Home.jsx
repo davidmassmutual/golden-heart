@@ -1,6 +1,14 @@
 import Hero from '../components/Hero';
 import Card from '../components/Card';
 import '../styles/Home.css';
+import img1 from '../images/orph1.webp';
+import img2 from '../images/orph2.jpg';
+import img3 from '../images/orph3.png';
+import img6 from '../images/orph6.jpg';
+import img7 from '../images/orph7.jpeg';
+import img8 from '../images/orph8.jpeg';
+import imgHero from '../images/24966_l.jpg';
+
 
 function Home() {
   const newsItems = [
@@ -8,21 +16,21 @@ function Home() {
       id: 1,
       title: "Crisis in Gaza: Children Need Urgent Help",
       description: "Thousands of children in Gaza face dire conditions due to ongoing conflict. Support our relief efforts.",
-      image: "/public/assets/images/orph1.webp",
+      image: img1,
       link: "/news/gaza-crisis",
     },
     {
       id: 2,
       title: "New Education Program Launched",
       description: "Our latest initiative provides schooling for 200 orphaned children in rural areas.",
-      image: "/public/assets/images/orph2.jpg",
+      image: img2,
       link: "/news/education-program",
     },
     {
       id: 3,
       title: "Healthcare Outreach in Africa",
       description: "Our mobile clinics are reaching orphaned children with life-saving care.",
-      image: "/public/assets/images/orph3.png",
+      image: img3,
       link: "/news/healthcare-outreach",
     },
   ];
@@ -34,7 +42,7 @@ function Home() {
         subtitle="Transforming lives through love, care, and opportunity for orphaned children worldwide."
         ctaText="Donate Now"
         ctaLink="/donate"
-        backgroundImage="/public/assets/images/24966_l.jpg"
+        backgroundImage={imgHero}
       />
       <section className="mission">
         <div className="container">
@@ -71,20 +79,19 @@ function Home() {
             <Card
               title="Education"
               description="Empowering children with quality education and skills for a brighter future."
-              image="/public/assets/images/orph6.jpg"
+              image={img6}
               link="/programs/education"
             />
             <Card
               title="Healthcare"
               description="Providing medical care and mental health support to ensure every child is healthy."
-              image="/public/assets/images/orph7.jpeg"
+              image={img7}
               link="/programs/healthcare"
             />
             <Card
               title="Shelter"
               description="Offering safe, loving homes where children can grow and thrive."
-              image="/public/assets/images/orph8.jpeg
-              "
+              image={img8}
               link="/programs/shelter"
             />
           </div>

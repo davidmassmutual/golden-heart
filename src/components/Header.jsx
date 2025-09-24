@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import '../styles/Header.css';
-
+import imgLogo from '../images/orphlogo.avif';
 function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -12,7 +12,7 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <img src="/public/assets/images/orphlogo.avif" alt="Golden Heart Orphanage" />
+        <img src={imgLogo} alt="Golden Heart Orphanage" />
       </div>
       
       <button 
