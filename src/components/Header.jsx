@@ -1,23 +1,42 @@
-import { Link, NavLink } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import '../styles/Header.css';
 
 function Header() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <header>
+    <header className="header">
       <div className="logo">
         <img src="/assets/logo.png" alt="Golden Heart Orphanage" />
       </div>
-      <nav>
+      
+      <button 
+        className={`hamburger ${isMenuOpen ? 'open' : ''}`} 
+        onClick={toggleMenu}
+        aria-label="Toggle menu"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav className={`nav ${isMenuOpen ? 'open' : ''}`}>
         <ul>
-          <li><NavLink to="/" exact activeClassName="active">Home</NavLink></li>
-          <li><NavLink to="/about" activeClassName="active">About</NavLink></li>
-          <li><NavLink to="/programs" activeClassName="active">Programs</NavLink></li>
-          <li><NavLink to="/donate" activeClassName="active">Donate</NavLink></li>
-          <li><NavLink to="/news" activeClassName="active">News</NavLink></li>
-          <li><NavLink to="/contact" activeClassName="active">Contact</NavLink></li>
+          <li><NavLink to="/" end onClick={toggleMenu}>Home</NavLink></li>
+          <li><NavLink to="/about" onClick={toggleMenu}>About</NavLink></li>
+          <li><NavLink to="/programs" onClick={toggleMenu}>Programs</NavLink></li>
+          <li><NavLink to="/donate" onClick={toggleMenu}>Donate</NavLink></li>
+          <li><NavLink to="/news" onClick={toggleMenu}>News</NavLink></li>
+          <li><NavLink to="/contact" onClick={toggleMenu}>Contact</NavLink></li>
         </ul>
       </nav>
     </header>
   );
 }
+
 export default Header;
