@@ -8,6 +8,8 @@ import img6 from '../images/orph6.jpg';
 import img7 from '../images/orph7.jpeg';
 import img8 from '../images/orph8.jpeg';
 import imgHero from '../images/orph9.jpg';
+import CountUp from "react-countup";
+
 
 
 
@@ -57,6 +59,7 @@ function Home() {
           <a href="/about" className="learn-more">Learn More About Us</a>
         </div>
       </section>
+      
       <section className="news">
         <div className="container">
           <h2>Children in Need</h2>
@@ -74,8 +77,32 @@ function Home() {
         </div>
       </section>
       <section className="highlights">
+      <section className="stats">
+  <div className="container">
+    <h2>Our Impact</h2>
+    <div className="stats-grid">
+      <div className="stats-item">
+        <span className="number">
+          <CountUp end={5000} duration={3} separator="," />+
+        </span>
+        <span className="label">Children Helped</span>
+      </div>
+      <div className="stats-item">
+        <span className="number">
+          <CountUp end={10} duration={3} />
+        </span>
+        <span className="label">Countries Served</span>
+      </div>
+      <div className="stats-item">
+        <span className="number">
+          <CountUp end={15} duration={3} />
+        </span>
+        <span className="label">Years of Service</span>
+      </div>
+    </div>
+  </div>
+</section>
         <div className="container">
-          <h2>Our Impact</h2>
           <div className="highlights-grid">
             <Card
               title="Education"
@@ -108,6 +135,26 @@ function Home() {
           </div>
         </div>
       </section>
+      <section className="reviews">
+  <div className="container">
+    <h2>What People Say</h2>
+    <div className="reviews-grid">
+      <div className="review-card">
+        <p>“Golden Heart Orphanage has truly changed lives. Their dedication is inspiring.”</p>
+        <h4>- Sarah M.</h4>
+      </div>
+      <div className="review-card">
+        <p>“I volunteered last summer, and the love these children receive is heartwarming.”</p>
+        <h4>- James O.</h4>
+      </div>
+      <div className="review-card">
+        <p>“My donation made a real difference. I’ll always support this mission.”</p>
+        <h4>- Aisha K.</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
     </div>
   );
 }

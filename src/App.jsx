@@ -7,6 +7,7 @@ import Donate from './pages/Donate';
 import News from './pages/News';
 import Contact from './pages/Contact';
 import Program from './pages/Program';
+import Volunteer from './pages/Volunteer';
 
 function App() {
   return (
@@ -15,10 +16,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/about" element={<About/>} />
-        <Route path="/program" element={<Program/>} />
+        <Route path="/programs" element={<Program/>} />
         <Route path="/donate" element={<Donate/>} />
         <Route path="/news" element={<News/>} />
         <Route path="/contact" element={<Contact/>} />
+        <Route path="/volunteer" element={<Volunteer/>} />
       </Routes>
       <Footer />
     </Router>

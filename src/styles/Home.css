@@ -153,6 +153,103 @@
   background: #e0e0e0;
 }
 
+/* Stats Section - Modern Minimal Design */
+.stats {
+  background: #fff;
+}
+
+.stats h2 {
+  font-size: 2rem;
+  margin-bottom: 3rem;
+  color: #1a3c6d;
+  text-align: center;
+}
+
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.stats-item {
+  text-align: center;
+  position: relative;
+  padding: 0 2rem;
+}
+
+.stats-item .number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #C8102E;
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.stats-item .label {
+  font-size: 1.1rem;
+  color: #444;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+/* Subtle divider for large screens */
+.stats-grid .stats-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 25%;
+  height: 50%;
+  width: 2px;
+  background: #e0e0e0;
+}
+
+/* Reviews Section */
+.reviews {
+  padding: 4rem 0;
+  background: #f1f4f9;
+}
+
+.reviews h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  color: #1a3c6d;
+  text-align: center;
+}
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.review-card {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.review-card:hover {
+  transform: translateY(-5px);
+}
+
+.review-card p {
+  font-size: 1.1rem;
+  font-style: italic;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.review-card h4 {
+  color: #C8102E;
+  font-weight: bold;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero {
@@ -167,11 +264,28 @@
     font-size: 1rem;
   }
 
-  .mission, .news, .highlights, .cta-section {
+  .mission, .news, .highlights, .cta-section, .reviews, .stats {
     padding: 2rem 0;
   }
 
-  .news-grid, .highlights-grid {
+  .news-grid, .highlights-grid, .reviews-grid {
     grid-template-columns: 1fr;
+  }
+
+  .stats-grid {
+    gap: 0.5rem;
+    
+  }
+
+  .stats-item {
+    padding: 0;
+  }
+
+  .stats-grid .stats-item:not(:last-child)::after {
+    display: none;
+  }
+
+  .stats-item .number {
+    font-size: 2rem;
   }
 }

@@ -30,6 +30,7 @@ function Header() {
         <ul>
           <li><NavLink to="/" end onClick={toggleMenu}>Home</NavLink></li>
           <li><NavLink to="/about" onClick={toggleMenu}>About</NavLink></li>
+          <li><NavLink to="/volunteer" onClick={toggleMenu}>Volunteer</NavLink></li>
           <li><NavLink to="/programs" onClick={toggleMenu}>Programs</NavLink></li>
           <li><NavLink to="/donate" onClick={toggleMenu}>Donate</NavLink></li>
           <li><NavLink to="/news" onClick={toggleMenu}>News</NavLink></li>

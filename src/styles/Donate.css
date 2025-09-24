@@ -1,0 +1,122 @@
+.donate-page {
+  font-family: "Poppins", sans-serif;
+  color: #333;
+}
+
+/* Hero Section */
+.donate-hero {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url("../images/donate-hero.jpg") no-repeat center/cover;
+  color: #fff;
+  text-align: center;
+  padding: 6rem 1rem;
+}
+
+.donate-hero h1 {
+  font-size: 2.8rem;
+  margin-bottom: 1rem;
+}
+
+.donate-hero p {
+  font-size: 1.2rem;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Donation Form */
+.donation-form-section {
+  margin: 4rem auto;
+  text-align: center;
+}
+
+.donation-form-section h2 {
+  margin-bottom: 2rem;
+  color: #1a3c6d;
+}
+
+/* Donation Methods */
+.donation-methods {
+  margin: 4rem auto;
+}
+
+.donation-methods h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #1a3c6d;
+}
+
+.donation-category {
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.donation-category h3 {
+  color: #c8102e;
+  margin-bottom: 1rem;
+}
+
+.donation-category ul {
+  list-style: none;
+  padding: 0;
+}
+
+.donation-category li {
+  margin-bottom: 0.8rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.05rem;
+}
+
+.donation-category .icon {
+  margin-right: 0.6rem;
+  color: #1a3c6d;
+  font-size: 1.3rem;
+}
+
+/* CTA Section */
+.donation-cta {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: #1a3c6d;
+  color: #fff;
+}
+
+.donation-cta h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.donation-cta p {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+  font-size: 1.1rem;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 1rem 2rem;
+  background: #c8102e;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.cta-btn:hover {
+  background: #a10c24;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .donation-category {
+    padding: 1.5rem;
+  }
+
+  .donate-hero h1 {
+    font-size: 2rem;
+  }
+}

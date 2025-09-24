@@ -1,6 +1,6 @@
 footer {
-  background: #4a4949;
-  color: #fff;
+  background: #e8ebef;
+  color: #1a3c6d;
   padding: 2rem 1rem;
 }
 
@@ -33,7 +33,7 @@ footer {
 
 .footer-links a,
 .socials a {
-  color: #fff;
+  color: #1a3c6d;
   text-decoration: none;
   font-weight: 500;
   transition: color 0.3s ease;
