@@ -12,13 +12,14 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <img src="/assets/logo.png" alt="Golden Heart Orphanage" />
+        <img src="/public/assets/images/orphlogo.avif" alt="Golden Heart Orphanage" />
       </div>
       
       <button 
         className={`hamburger ${isMenuOpen ? 'open' : ''}`} 
         onClick={toggleMenu}
         aria-label="Toggle menu"
+        aria-expanded={isMenuOpen}
       >
         <span></span>
         <span></span>
