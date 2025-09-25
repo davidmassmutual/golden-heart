@@ -15,6 +15,7 @@ import News from './pages/News';
 import Contact from './pages/Contact';
 import Program from './pages/Program';
 import Volunteer from './pages/Volunteer';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
    useEffect(() => {
@@ -24,10 +25,9 @@ function App() {
     });
   }, []);
 
-  window.scrollTo(0, 0)
   return (
     <Router>
-      {<scrollToTop />}
+      {<ScrollToTop/>}
       <Header />
       <Routes>
         <Route path="/" element={<Home/>} />

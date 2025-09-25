@@ -11,6 +11,8 @@ import img8 from "../images/orph8.jpeg";
 import imgHero from "../images/orph9.jpg";
 import CountUp from "react-countup";
 import AOS from "aos";
+import "aos/dist/aos.css";
+import { Link } from "react-router-dom";
 
 // Swiper imports
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -96,9 +98,9 @@ function Home() {
             5,000 children across 10 countries, offering them hope and a place
             to call home.
           </p>
-          <a href="/about" className="learn-more">
-            Learn More About Us
-          </a>
+         <Link to="/about" className="learn-more">
+              Learn More About Us
+         </Link>
         </div>
       </section>
 
@@ -195,12 +197,12 @@ function Home() {
             make a difference.
           </p>
           <div className="cta-buttons">
-            <a href="/donate" className="cta-button">
+             <Link to="/donate" className="cta-button">
               Donate Now
-            </a>
-            <a href="/volunteer" className="cta-button secondary">
+            </Link>
+            <Link to="/volunteer" className="cta-button secondary">
               Volunteer
-            </a>
+            </Link>
           </div>
         </div>
       </section>

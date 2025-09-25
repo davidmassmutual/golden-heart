@@ -2,55 +2,80 @@
 .news-page {
   width: 100%;
   margin-top: 0;
+  background: #f9fafc;
+  font-family: "Inter", sans-serif;
 }
 
 /* Hero Section */
 .news-hero {
-  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+  background: linear-gradient(rgba(0,0,0,0.65), rgba(0,0,0,0.65)),
     url("../images/news1.jpg") no-repeat center center/cover;
   color: #fff;
   text-align: center;
-  padding: 6rem 1rem;
+  padding: 7rem 1.5rem;
 }
 
 .news-hero h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
+  font-weight: 700;
   margin-bottom: 1rem;
 }
 
 .news-hero p {
-  font-size: 1.2rem;
-  max-width: 800px;
+  font-size: 1.25rem;
+  max-width: 750px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 /* News List */
 .news-list {
-  padding: 4rem 0;
+  padding: 4rem 2rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 2.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .news-card {
   background: #fff;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .news-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
-.news-card img {
+/* Image with overlay */
+.news-image {
+  position: relative;
   width: 100%;
-  height: 200px;
+  height: 220px;
+}
+
+.news-image img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+}
+
+.news-overlay {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(26, 60, 109, 0.85);
+  color: #fff;
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
 
 .news-card-content {
@@ -59,19 +84,42 @@
 }
 
 .news-card-content h2 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   margin-bottom: 0.8rem;
   color: #1a3c6d;
+  font-weight: 700;
 }
 
 .news-card-content p {
   font-size: 1rem;
   color: #555;
-  margin-bottom: 1rem;
-  line-height: 1.5;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
 }
 
 .news-meta {
   font-size: 0.9rem;
-  color: #888;
+  color: #777;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .news-hero{
+    padding: 3rem 1rem;
+  }
+  .news-hero h1 {
+    font-size: 2rem;
+  }
+
+  .news-hero p {
+    font-size: 1rem;
+  }
+
+  .news-image {
+    height: 180px;
+  }
+
+  .news-card-content h2 {
+    font-size: 1.25rem;
+  }
 }

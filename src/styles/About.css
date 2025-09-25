@@ -2,40 +2,46 @@
   font-family: "Poppins", sans-serif;
   color: #333;
   line-height: 1.6;
+  overflow-x: hidden;
 }
 
 /* Hero Section */
 .about-hero {
+  /* height: 80vh; */
   background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
     url("../images/about2.jpg") no-repeat center/cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #fff;
   text-align: center;
-  padding: 6rem 1rem;
+  padding: 8rem 1rem;
+  
 }
 
 .about-hero h1 {
-  font-size: 3rem;
+  font-size: 3.5rem;
   margin-bottom: 1rem;
+  animation: fadeInDown 1s ease;
 }
 
 .about-hero p {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   max-width: 700px;
   margin: 0 auto;
+  animation: fadeInUp 1.2s ease;
 }
 
 /* Story Section */
 .about-story {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
   padding: 4rem 0;
 }
 
 .story-content {
   display: flex;
+  align-items: center;
+  gap: 3rem;
   flex-wrap: wrap;
-  gap: 2rem;
 }
 
 .story-text {
@@ -44,7 +50,7 @@
 }
 
 .story-text h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
   color: #1a3c6d;
 }
@@ -56,41 +62,44 @@
 
 .story-image img {
   width: 100%;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+  border-radius: 15px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  transition: transform 0.3s;
+}
+
+.story-image img:hover {
+  transform: scale(1.03);
 }
 
 /* Mission & Vision */
 .about-mission {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   padding: 4rem 0;
-  flex-wrap: wrap;
 }
 
 .mission-card {
   background: #fff;
-  border-radius: 12px;
+  border-radius: 15px;
   padding: 2rem;
   text-align: center;
-  flex: 1;
-  min-width: 280px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-  transition: transform 0.3s;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: all 0.3s;
 }
 
 .mission-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-8px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
 }
 
 .mission-card img {
-  width: 80px;
+  width: 90px;
   margin-bottom: 1rem;
 }
 
 .mission-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   margin-bottom: 1rem;
   color: #1a3c6d;
 }
@@ -99,22 +108,67 @@
 .about-team {
   text-align: center;
   padding: 4rem 0;
+  background: #f9fbfd;
 }
 
 .about-team h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 1rem;
   color: #1a3c6d;
 }
 
 .about-team p {
   max-width: 700px;
-  margin: 0 auto 2rem;
+  margin: 0 auto 3rem;
   color: #555;
 }
 
 .team-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
+  gap: 2.5rem;
+}
+
+/* Animations */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .about-hero {
+    /* height: 60vh; */
+    padding: 5rem 1rem;
+  }
+
+  .about-hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-hero p {
+    font-size: 1rem;
+  }
+
+  .story-content {
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .story-image img {
+    border-radius: 12px;
+  }
+
+  .mission-card {
+    padding: 1.5rem;
+  }
+
+  .about-team h2 {
+    font-size: 1.8rem;
+  }
 }

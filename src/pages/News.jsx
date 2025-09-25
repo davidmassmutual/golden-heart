@@ -82,13 +82,17 @@ const News = () => {
       <section className="news-list container">
         {newsArticles.map((article) => (
           <div key={article.id} className="news-card">
-            <img src={article.image} alt={article.title} />
+            <div className="news-image">
+              <img src={article.image} alt={article.title} />
+              <div className="news-overlay">
+                <span className="news-source">{article.source}</span>
+              </div>
+            </div>
             <div className="news-card-content">
               <h2>{article.title}</h2>
               <p>{article.description}</p>
               <div className="news-meta">
                 <span>{article.date}</span>
-                <span> | {article.source}</span>
               </div>
             </div>
           </div>

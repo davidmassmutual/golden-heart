@@ -1,6 +1,7 @@
 import React from "react";
 import DonationForm from "../components/DonationForm";
 import "../styles/Donate.css";
+import { Link } from "react-router-dom";
 import { FaPaypal, FaApplePay, FaGooglePay, FaCreditCard, FaUniversity, FaBitcoin, FaEthereum, FaGift } from "react-icons/fa";
 
 function Donate() {
@@ -75,7 +76,9 @@ function Donate() {
           Your kindness helps us build a brighter future for orphaned children.
           Whether big or small, every gift changes a life.
         </p>
-        <a href="/volunteer" className="cta-btn">Become a Volunteer</a>
+      <Link to="/volunteer" className="cta-button secondary">
+              Volunteer
+            </Link>
       </section>
     </div>
   );

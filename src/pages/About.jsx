@@ -15,9 +15,9 @@ function About() {
       {/* Hero Section */}
       <section className="about-hero">
         <div className="overlay">
-          <h1>About Us</h1>
+          {/* <h1>About Us</h1> */}
           <p>
-            Bringing hope, love, and a brighter future to children in need across the globe.
+            {/* Bringing hope, love, and a brighter future to children in need across the globe. */}
           </p>
         </div>
       </section>
@@ -25,6 +25,9 @@ function About() {
       {/* Story Section */}
       <section className="about-story container">
         <div className="story-content">
+          <div className="story-image">
+            <img src={storyImg} alt="Our Story" />
+          </div>
           <div className="story-text">
             <h2>Our Story</h2>
             <p>
@@ -37,9 +40,6 @@ function About() {
               thousands of children worldwide, working hand in hand with communities
               to create sustainable change.
             </p>
-          </div>
-          <div className="story-image">
-            <img src={storyImg} alt="Our Story" />
           </div>
         </div>
       </section>
@@ -72,7 +72,7 @@ function About() {
           making a lasting difference in the lives of children.
         </p>
         <div className="team-grid">
-          <Card title="Jane Doe" description="Founder & CEO" image={team1} />/
+          <Card title="Jane Doe" description="Founder & CEO" image={team1} />
           <Card title="Timothy Clatterbuck" description="Director of Operations" image={team2} />
           <Card title="Sarah Johnson" description="Head of Education" image={team3} />
           <Card title="Michael Lee" description="Healthcare Coordinator" image={team4} />
