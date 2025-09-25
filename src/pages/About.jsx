@@ -15,7 +15,7 @@ function About() {
       {/* Hero Section */}
       <section className="about-hero">
         <div className="overlay">
-          <h1>About Golden Heart Orphanage</h1>
+          <h1>About Us</h1>
           <p>
             Bringing hope, love, and a brighter future to children in need across the globe.
           </p>

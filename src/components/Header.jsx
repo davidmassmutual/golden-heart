@@ -12,7 +12,9 @@ function Header() {
   return (
     <header className="header">
       <div className="logo">
-        <img src={imgLogo} alt="Golden Heart Orphanage" />
+        <button className='logo-button'>
+          <NavLink to="/" end><img src={imgLogo} alt="Golden Heart Orphanage" /></NavLink>
+        </button>
       </div>
       
       <button 
