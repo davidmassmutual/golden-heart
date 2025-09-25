@@ -9,7 +9,7 @@ function Donate() {
       {/* Hero Section */}
       <section className="donate-hero">
         <div className="overlay">
-          <h1>💖 Support Golden Heart Orphanage</h1>
+          <h1> Support Golden Heart Orphanage 💖</h1>
           <p>
             Every contribution helps us provide shelter, education, and healthcare
             to children in need. Thank you for your generosity!
