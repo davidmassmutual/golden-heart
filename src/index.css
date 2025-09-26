@@ -13,12 +13,52 @@ h1, h2, h3 {
   font-weight: 700;
   color: aliceblue;
 }
+/* ---------- Global focus / tap highlight handling (place in your main CSS) ---------- */
 
-button:focus,
-a:focus,
-input:focus,
-textarea:focus {
-  outline: none;
+/* Remove mobile tap highlight (iOS/Android WebKit) */
+a, button, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Remove Firefox inner focus border on buttons */
+button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* Remove default outlines and shadows for mouse/touch focus,
+   but keep a clear keyboard focus style via :focus-visible for accessibility. */
+a, button, input, textarea, select {
+  outline: none;             /* hide the native focus ring */
   box-shadow: none;
 }
 
+/* For keyboard users: show a subtle, brand-color focus ring */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: none; /* remove browser default */
+  box-shadow: 0 0 0 4px rgba(200,16,46,0.18); /* subtle red glow */
+  border-radius: 6px;
+}
+
+/* Remove active background color on click for some browsers */
+a:active,
+button:active {
+  background-color: transparent !important;
+}
+
+/* If some third-party component still forces outline, this stronger rule helps (use sparingly) */
+a:focus, button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+/* Optional: if you use anchor tags styled as buttons, make sure default -webkit appearance doesn't interfere */
+button, input[type="button"], input[type="submit"], a.button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
