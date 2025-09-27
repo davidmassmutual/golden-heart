@@ -1,8 +1,6 @@
-// client/src/components/DonationForm.js
+// client/src/components/DonationForm.js (simplified)
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { io } from 'socket.io-client';
 import '../styles/DonationForm.css';
 
 const DonationForm = () => {
@@ -15,7 +13,6 @@ const DonationForm = () => {
   });
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
-  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,41 +23,16 @@ const DonationForm = () => {
     setError('');
     setSuccess('');
 
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
-
     try {
-      // Submit donation
-      const donationResponse = await axios.post(`${apiUrl}/api/donations`, formData);
-      setSuccess('Donation submitted successfully!');
-
-      // Create chat session with validated data
-      const userName = formData.name.trim() || 'Anonymous';
-      const userId = formData.email.trim() || `anonymous-${Date.now()}@noemail.com`;
-      const chatResponse = await axios.post(`${apiUrl}/api/chats`, {
-        userName,
-        userId,
-      });
-
-      if (!chatResponse.data.chatId) {
-        throw new Error('No chatId returned from server');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      await axios.post(`${apiUrl}/api/donations`, formData);
+      setSuccess('Donation submitted successfully! Open chat for payment details.');
+      // Open Smartsupp chat
+      if (window.Smartsupp) {
+        window.Smartsupp('chat', 'open');
       }
-
-      // Connect to Socket.io
-      const socket = io(apiUrl);
-      socket.emit('join-chat', chatResponse.data.chatId);
-      socket.emit('send-message', {
-        chatId: chatResponse.data.chatId,
-        text: `Hello, I just submitted a donation of $${formData.amount}. Please provide payment details (e.g., PayPal or bank info).`,
-        sender: 'user',
-      });
-
-      // Redirect to SmartHub chat
-      navigate(`/smarthub-chat/${chatResponse.data.chatId}`, {
-        state: { userName, userId },
-      });
     } catch (err) {
-      console.error('Donation or chat error:', err.response?.data || err.message);
-      setError(err.response?.data?.error || 'Error submitting donation or starting chat');
+      setError(err.response?.data?.error || 'Error submitting donation');
     }
   };
 
@@ -94,7 +66,7 @@ const DonationForm = () => {
           <label>Message (Optional)</label>
           <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your Message" />
         </div>
-        <button type="submit">Request Payment Info</button>
+        <button type="submit">Submit Donation</button>
       </form>
     </div>
   );

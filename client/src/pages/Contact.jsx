@@ -1,11 +1,47 @@
-import React from "react";
-import "../styles/Contact.css";
-import { FaEnvelope, FaPhone, FaMapMarkerAlt } from "react-icons/fa";
+// client/src/pages/Contact.js
+import React, { useState } from 'react';
+import axios from 'axios';
+import { FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
+import '../styles/Contact.css';
 
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      await axios.post(`${apiUrl}/api/contacts`, formData);
+      setSuccess('Message submitted successfully! Opening chat...');
+      // Open Smartsupp chat
+      if (window.smartsupp) {
+        window.smartsupp('chat:open');
+      }
+    } catch (err) {
+      // Handle errors safely
+      const errorMessage = err.response && err.response.data && err.response.data.error
+        ? err.response.data.error
+        : 'Error submitting message. Please try again later.';
+      setError(errorMessage);
+      console.error('Contact form error:', err.message);
+    }
+  };
+
   return (
     <div className="contact-page">
-      {/* Hero */}
       <section className="contact-hero">
         <div className="overlay">
           <h1>Contact Us</h1>
@@ -15,41 +51,54 @@ function Contact() {
           </p>
         </div>
       </section>
-
-      {/* Contact Info */}
       <section className="contact-info container">
         <div className="info-card">
           <FaEnvelope className="icon" />
           <h3>Email</h3>
           <p>info@goldenheart.org</p>
         </div>
-        {/* <div className="info-card">
-          <FaPhone className="icon" />
-          <h3>Phone</h3>
-          <p>+123-456-7890</p>
-        </div> */}
         <div className="info-card">
           <FaMapMarkerAlt className="icon" />
           <h3>Address</h3>
           <p>3 United Nations Plaza, New York, NY, 10017, United States</p>
         </div>
       </section>
-
-      {/* Contact Form */}
       <section className="contact-form container">
         <h2>Send Us a Message</h2>
-        <form>
+        {error && <p className="error">{error}</p>}
+        {success && <p className="success">{success}</p>}
+        <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Name</label>
-            <input type="text" placeholder="Your Name" required />
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your Name"
+            />
           </div>
           <div className="form-group">
             <label>Email</label>
-            <input type="email" placeholder="Your Email" required />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Your Email"
+              required
+            />
           </div>
           <div className="form-group">
             <label>Message</label>
-            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Your Message"
+              rows="5"
+              required
+            ></textarea>
           </div>
           <button type="submit" className="submit-btn">
             Send Message

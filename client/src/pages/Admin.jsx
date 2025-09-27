@@ -1,6 +1,6 @@
+// client/src/pages/Admin.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import io from 'socket.io-client'; // New: For real-time chat
 import '../styles/Admin.css';
 
 const Admin = () => {
@@ -9,6 +9,7 @@ const Admin = () => {
   const [token, setToken] = useState(localStorage.getItem('token') || '');
   const [volunteers, setVolunteers] = useState([]);
   const [donations, setDonations] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [changePasswordForm, setChangePasswordForm] = useState({
@@ -16,24 +17,22 @@ const Admin = () => {
     newPassword: '',
   });
   const [passwordChangeMessage, setPasswordChangeMessage] = useState('');
-  const [chats, setChats] = useState([]); // New: Store chats
-  const [selectedChat, setSelectedChat] = useState(null); // New: Selected chat for reply
-  const [adminMessage, setAdminMessage] = useState(''); // New: Admin's message input
-  const [socket, setSocket] = useState(null); // New: Socket.io connection
+
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
     try {
-      const res = await axios.post(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/login`, {
+      const res = await axios.post(`${apiUrl}/api/admin/login`, {
         username,
         password,
       });
       localStorage.setItem('token', res.data.token);
       setToken(res.data.token);
-      setError('');
     } catch (err) {
-      setError('Invalid credentials');
+      setError(err.response?.data?.error || 'Invalid credentials');
     }
     setLoading(false);
   };
@@ -42,15 +41,15 @@ const Admin = () => {
     e.preventDefault();
     setLoading(true);
     setPasswordChangeMessage('');
+    setError('');
     try {
       const res = await axios.post(
-        `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/change-password`,
+        `${apiUrl}/api/admin/change-password`,
         changePasswordForm,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setPasswordChangeMessage(res.data.message);
       setChangePasswordForm({ currentPassword: '', newPassword: '' });
-      setError('');
     } catch (err) {
       setError(err.response?.data?.error || 'Error changing password');
     }
@@ -59,23 +58,24 @@ const Admin = () => {
 
   const fetchData = async () => {
     setLoading(true);
+    setError('');
     try {
-      const [volunteerRes, donationRes, chatRes] = await Promise.all([
-        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/volunteers`, {
+      const [volunteerRes, donationRes, contactRes] = await Promise.all([
+        axios.get(`${apiUrl}/api/admin/volunteers`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/admin/donations`, {
+        axios.get(`${apiUrl}/api/admin/donations`, {
           headers: { Authorization: `Bearer ${token}` },
         }),
-        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/chats`, {
+        axios.get(`${apiUrl}/api/admin/contacts`, {
           headers: { Authorization: `Bearer ${token}` },
-        }), // New: Fetch chats
+        }),
       ]);
       setVolunteers(volunteerRes.data);
       setDonations(donationRes.data);
-      setChats(chatRes.data);
+      setContacts(contactRes.data);
     } catch (err) {
-      setError('Error fetching data');
+      setError(err.response?.data?.error || 'Error fetching data');
     }
     setLoading(false);
   };
@@ -84,65 +84,22 @@ const Admin = () => {
     if (token) fetchData();
   }, [token]);
 
-  // New: Connect Socket.io for admin replies
-  useEffect(() => {
-    if (token) {
-      const newSocket = io(import.meta.env.VITE_API_URL || 'http://localhost:5000');
-      setSocket(newSocket);
-
-      newSocket.on('new-message', (msg) => {
-        if (selectedChat && msg.chatId === selectedChat._id) {
-          setSelectedChat({ ...selectedChat, messages: [...selectedChat.messages, msg] });
-        }
-        fetchChats(); // Refresh chats
-      });
-
-      newSocket.on('error', (err) => {
-        setError(err);
-      });
-
-      return () => newSocket.close();
-    }
-  }, [token, selectedChat]);
-
-  // New: Fetch chats (used in useEffect and socket handler)
-  const fetchChats = async () => {
-    try {
-      const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/chats`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setChats(res.data);
-    } catch (err) {
-      setError('Error fetching chats');
-    }
-  };
-
-  // New: Send admin message
-  const sendAdminMessage = (chatId) => {
-    if (adminMessage.trim() && socket) {
-      socket.emit('send-message', { chatId, text: adminMessage, sender: 'admin' });
-      setAdminMessage('');
-    }
-  };
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken('');
     setVolunteers([]);
     setDonations([]);
-    setChats([]); // New
-    setSelectedChat(null); // New
+    setContacts([]);
     setPasswordChangeMessage('');
-    if (socket) socket.close(); // New
   };
 
   const renderFile = (idFile) => {
     if (!idFile) return <span className="no-file">No ID uploaded</span>;
     const ext = idFile.split('.').pop().toLowerCase();
     if (['jpg', 'jpeg', 'png'].includes(ext)) {
-      return <img src={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${idFile}`} alt="ID" className="id-image" onError={(e) => { e.target.style.display = 'none'; }} />;
+      return <img src={`${apiUrl}${idFile}`} alt="ID" className="id-image" onError={(e) => { e.target.style.display = 'none'; }} />;
     }
-    return <a href={`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}${idFile}`} target="_blank" rel="noopener noreferrer" className="file-link">Download PDF</a>;
+    return <a href={`${apiUrl}${idFile}`} target="_blank" rel="noopener noreferrer" className="file-link">Download PDF</a>;
   };
 
   if (!token) {
@@ -222,58 +179,42 @@ const Admin = () => {
         </div>
       </section>
 
-      <section className="data-section">
-        <div className="section-card">
-          <h2>SmartHub Chats (Donation Support)</h2>
-          {chats.length === 0 ? (
-            <p className="no-data">No chats yet.</p>
-          ) : (
-            <div className="chat-list">
-              {chats.map((chat) => (
-                <div
-                  key={chat._id}
-                  className="chat-item"
-                  onClick={() => setSelectedChat(chat)}
-                >
-                  <strong>{chat.userName}</strong> ({chat.userId}) - {chat.messages.length} messages
-                </div>
-              ))}
-            </div>
-          )}
-          {selectedChat && (
-            <div className="selected-chat">
-              <h3>Chat with {selectedChat.userName}</h3>
-              <div className="messages">
-                {selectedChat.messages.map((msg, idx) => (
-                  <div key={idx} className={`message ${msg.sender}`}>
-                    <strong>{msg.sender === 'admin' ? 'You' : 'User'}:</strong> {msg.text}
-                    <span className="timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</span>
-                  </div>
-                ))}
-              </div>
-              <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  sendAdminMessage(selectedChat._id);
-                }}
-              >
-                <input
-                  type="text"
-                  value={adminMessage}
-                  onChange={(e) => setAdminMessage(e.target.value)}
-                  placeholder="Reply to user..."
-                />
-                <button type="submit">Send</button>
-              </form>
-            </div>
-          )}
-        </div>
-      </section>
-
       {loading ? (
         <div className="loading">Loading data...</div>
       ) : (
         <>
+          <section className="data-section">
+            <div className="section-card">
+              <h2>Contact Messages</h2>
+              {contacts.length === 0 ? (
+                <p className="no-data">No contact messages yet.</p>
+              ) : (
+                <div className="table-wrapper">
+                  <table className="admin-table">
+                    <thead>
+                      <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {contacts.map((contact) => (
+                        <tr key={contact._id}>
+                          <td>{contact.name || 'Anonymous'}</td>
+                          <td>{contact.email}</td>
+                          <td>{contact.message.substring(0, 100) + (contact.message.length > 100 ? '...' : '')}</td>
+                          <td>{new Date(contact.createdAt).toLocaleString()}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </section>
+
           <section className="data-section">
             <div className="section-card">
               <h2>Volunteer Applications</h2>

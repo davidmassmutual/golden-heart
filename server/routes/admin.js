@@ -85,4 +85,19 @@ router.get('/chats', authMiddleware, async (req, res) => {
   }
 });
 
+// server/routes/admin.js (add to existing code)
+const Contact = require('../models/contact');
+
+// ... existing admin routes ...
+
+router.get('/contacts', async (req, res) => {
+  try {
+    const contacts = await Contact.find().sort({ createdAt: -1 });
+    res.json(contacts);
+  } catch (error) {
+    console.error('Error fetching contacts:', error.message);
+    res.status(500).json({ error: 'Error fetching contacts' });
+  }
+});
+
 module.exports = router;
