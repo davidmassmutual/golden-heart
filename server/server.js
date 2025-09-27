@@ -16,19 +16,32 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
-
-app.use(cors({
-  origin: ['http://localhost:5173', 'https://goldenheartorphanage.com'],
-  methods: ['GET', 'POST'],
-}));
 const io = new Server(server, {
-  cors: { origin: ['http://localhost:5173', 'https://goldenheartorphanage.com'], methods: ['GET', 'POST'] },
+  cors: {
+    origin: [
+      'http://localhost:5173',
+      'https://golden-heart-abc123.vercel.app',
+      'https://www.goldenheartorphanage.com',
+    ],
+    methods: ['GET', 'POST', 'OPTIONS'], // Include OPTIONS for preflight
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+  },
 });
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: [
+    'http://localhost:5173',
+    'https://golden-heart-abc123.vercel.app',
+    'https://www.goldenheartorphanage.com',
+  ],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+}));
 app.use(express.json());
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/uploads', express.static(path.join(__dirname, 'Uploads')));
 
 // Connect to MongoDB
 mongoose
@@ -64,8 +77,6 @@ app.get('/api/chats', async (req, res) => {
     res.status(500).json({ error: 'Error fetching chats' });
   }
 });
-
-
 
 // Socket.io for real-time chat
 io.on('connection', (socket) => {
