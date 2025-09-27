@@ -16,11 +16,13 @@ dotenv.config();
 
 const app = express();
 const server = http.createServer(app);
+
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://goldenheartorphanage.com'],
+  methods: ['GET', 'POST'],
+}));
 const io = new Server(server, {
-  cors: {
-    origin: ['http://localhost:5173', 'https://*.vercel.app'],
-    methods: ['GET', 'POST'],
-  },
+  cors: { origin: ['http://localhost:5173', 'https://goldenheartorphanage.com'], methods: ['GET', 'POST'] },
 });
 
 // Middleware
@@ -62,6 +64,8 @@ app.get('/api/chats', async (req, res) => {
     res.status(500).json({ error: 'Error fetching chats' });
   }
 });
+
+
 
 // Socket.io for real-time chat
 io.on('connection', (socket) => {
