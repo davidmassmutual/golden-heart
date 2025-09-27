@@ -1,54 +1,128 @@
+/* client/src/styles/Footer.css */
 footer {
-  background: #e8ebef;
-  color: #1a3c6d;
+  background-color: #1a3c6d;
+  color: #ffffff;
   padding: 2rem 1rem;
+  font-family: 'Arial', sans-serif;
 }
 
 .footer-content {
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  /* gap: 1rem; */
-  text-align: center;
-}
-
-/* FOOTER TEXT */
-.footer-content p {
-  flex: 1 1 100%;
-  font-size: 0.95rem;
-  margin: 0.5rem 0;
-}
-
-/* LINKS */
-.footer-links,
-.socials {
-  display: flex;
   gap: 1rem;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
-.footer-links a,
-.socials a {
-  color: #1a3c6d;
+.footer-content p {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.footer-links a {
+  color: #28a745;
   text-decoration: none;
-  font-weight: 500;
+  font-size: 1rem;
   transition: color 0.3s ease;
 }
 
-.footer-links a:hover,
-.socials a:hover {
-  color: #C8102E;
+.footer-links a:hover {
+  color: #218838;
 }
 
-/* MOBILE */
+.socials {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.socials a {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.socials a:hover {
+  color: #28a745;
+}
+
+/* Modal styling (for Option 2) */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.modal p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  font-size: 1rem;
+}
+
+.modal button {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 0.8rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.modal button:hover {
+  background-color: #218838;
+}
+
+/* Responsive design */
 @media (max-width: 768px) {
-  .footer-content {
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+  footer {
+    padding: 1.5rem 1rem;
+  }
+
+  .footer-content p,
+  .footer-links a,
+  .socials a {
+    font-size: 0.9rem;
+  }
+
+  .socials {
+    gap: 1rem;
+  }
+
+  .modal {
+    padding: 1.5rem;
+  }
+
+  .modal h3 {
+    font-size: 1.3rem;
+  }
+
+  .modal p {
+    font-size: 0.9rem;
   }
 }
