@@ -24,29 +24,6 @@ function App() {
       duration: 1200,
       once: true,
     });
-
-    // Load Smartsupp script
-    const smartsuppScript = document.createElement('script');
-    smartsuppScript.type = 'text/javascript';
-    smartsuppScript.charset = 'utf-8';
-    smartsuppScript.async = true;
-    smartsuppScript.src = 'https://www.smartsuppchat.com/loader.js?';
-    smartsuppScript.text = `
-      var _smartsupp = _smartsupp || {};
-      _smartsupp.key = 'f12cab583210e0d1fc0834f9f53f193da2a47587';
-    `;
-    document.head.appendChild(smartsuppScript);
-
-    // Add noscript fallback
-    const noscript = document.createElement('noscript');
-    noscript.innerHTML = 'Powered by <a href="https://www.smartsupp.com" target="_blank">Smartsupp</a>';
-    document.body.appendChild(noscript);
-
-    // Cleanup on component unmount
-    return () => {
-      document.head.removeChild(smartsuppScript);
-      document.body.removeChild(noscript);
-    };
   }, []);
 
   return (

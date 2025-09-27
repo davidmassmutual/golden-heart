@@ -39,7 +39,11 @@ app.get('/health', (req, res) => {
 
 // Connect to MongoDB
 mongoose
-  .connect(process.env.MONGO_URI)
+  .connect(process.env.MONGO_URI, {
+    serverSelectionTimeoutMS: 5000, // Timeout after 5s
+    socketTimeoutMS: 45000, // Close sockets after 45s of inactivity
+    connectTimeoutMS: 10000, // Connection timeout
+  })
   .then(() => console.log('MongoDB connected'))
   .catch((err) => console.error('MongoDB connection error:', err));
 
