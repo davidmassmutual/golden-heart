@@ -1,16 +1,19 @@
-import React from "react";
-import DonationForm from "../components/DonationForm";
-import "../styles/Donate.css";
-import { Link } from "react-router-dom";
-import { FaPaypal, FaApplePay, FaGooglePay, FaCreditCard, FaUniversity, FaBitcoin, FaEthereum, FaGift } from "react-icons/fa";
+import React from 'react';
+import { useNavigate } from 'react-router-dom'; // Add for navigation
+import DonationForm from '../components/DonationForm';
+import '../styles/Donate.css';
+import { Link } from 'react-router-dom';
+import { FaPaypal, FaApplePay, FaGooglePay, FaCreditCard, FaUniversity, FaBitcoin, FaEthereum, FaGift } from 'react-icons/fa';
 
 function Donate() {
+  const navigate = useNavigate(); // Add for redirect to chat
+
   return (
     <div className="donate-page">
       {/* Hero Section */}
       <section className="donate-hero">
         <div className="overlay">
-          <h1> Support Golden Heart Orphanage 💖</h1>
+          <h1>Support Golden Heart Orphanage 💖</h1>
           <p>
             Every contribution helps us provide shelter, education, and healthcare
             to children in need. Thank you for your generosity!
@@ -18,10 +21,17 @@ function Donate() {
         </div>
       </section>
 
-      {/* Donation Form */}
+      {/* Donation Form and Chat Button */}
       <section className="donation-form-section container">
         <h2>Make a Direct Donation</h2>
         <DonationForm />
+        <button
+          onClick={() => navigate('/smarthub-chat')}
+          className="cta-button"
+          style={{ marginTop: '20px', background: '#c8102e', color: 'white' }}
+        >
+          Chat with Support for Payment Info
+        </button>
       </section>
 
       {/* Donation Methods */}

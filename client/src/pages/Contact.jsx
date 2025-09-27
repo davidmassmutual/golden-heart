@@ -23,15 +23,15 @@ function Contact() {
           <h3>Email</h3>
           <p>info@goldenheart.org</p>
         </div>
-        <div className="info-card">
+        {/* <div className="info-card">
           <FaPhone className="icon" />
           <h3>Phone</h3>
           <p>+123-456-7890</p>
-        </div>
+        </div> */}
         <div className="info-card">
           <FaMapMarkerAlt className="icon" />
           <h3>Address</h3>
-          <p>123 Hope Street, City, Country</p>
+          <p>3 United Nations Plaza, New York, NY, 10017, United States</p>
         </div>
       </section>
 

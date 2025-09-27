@@ -75,5 +75,14 @@ router.get('/donations', authMiddleware, async (req, res) => {
     res.status(500).json({ error: 'Error fetching donations' });
   }
 });
+// Add this to existing admin.js routes (after donations GET)
+router.get('/chats', authMiddleware, async (req, res) => {
+  try {
+    const chats = await Chat.find().sort({ createdAt: -1 });
+    res.json(chats);
+  } catch (error) {
+    res.status(500).json({ error: 'Error fetching chats' });
+  }
+});
 
 module.exports = router;

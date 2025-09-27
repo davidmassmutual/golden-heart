@@ -4,7 +4,7 @@ function Footer() {
   return (
     <footer>
       <div className="footer-content">
-        <p>&copy; 2025 Golden Heart Orphanage. All rights reserved.</p>
+        <p>&copy; 2022 Golden Heart Orphanage. All rights reserved.</p>
         <div className="footer-links">
           <a href="/contact">Contact</a>
         </div>

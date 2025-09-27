@@ -16,6 +16,7 @@ import Program from './pages/Program';
 import Volunteer from './pages/Volunteer';
 import Admin from './pages/Admin';
 import ScrollToTop from './components/ScrollToTop';
+import SmartHubChat from './pages/SmartHubChat';
 
 function App() {
   useEffect(() => {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/admin" element={<Admin />} />
+         <Route path="/smarthub-chat" element={<SmartHubChat/>} />
       </Routes>
       <Footer />
     </Router>
