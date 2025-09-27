@@ -94,7 +94,7 @@ const DonationForm = () => {
           <label>Message (Optional)</label>
           <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your Message" />
         </div>
-        <button type="submit">Donate & Request Payment Info</button>
+        <button type="submit">Request Payment Info</button>
       </form>
     </div>
   );
