@@ -25,13 +25,6 @@ function Donate() {
       <section className="donation-form-section container">
         <h2>Make a Direct Donation</h2>
         <DonationForm />
-        <button
-          onClick={() => navigate('/smarthub-chat')}
-          className="cta-button"
-          style={{ marginTop: '20px', background: '#c8102e', color: 'white' }}
-        >
-          Chat with Support for Payment Info
-        </button>
       </section>
 
       {/* Donation Methods */}

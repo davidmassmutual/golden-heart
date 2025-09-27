@@ -39,7 +39,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/volunteer" element={<Volunteer />} />
         <Route path="/admin" element={<Admin />} />
-         <Route path="/smarthub-chat" element={<SmartHubChat/>} />
+          <Route path="/smarthub-chat/:chatId" element={<SmartHubChat/>} />
       </Routes>
       <Footer />
     </Router>

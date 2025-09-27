@@ -1,17 +1,21 @@
+// client/src/components/DonationForm.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { io } from 'socket.io-client';
 import '../styles/DonationForm.css';
 
-function DonationForm() {
+const DonationForm = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     amount: '',
-    paymentMethod: '',
+    paymentMethod: 'PayPal',
     message: '',
   });
-  const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -19,78 +23,81 @@ function DonationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+    setSuccess('');
+
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
     try {
-      await axios.post('http://localhost:5000/api/donations', formData);
-      setSuccess('Thank you for your donation!');
-      setFormData({ name: '', email: '', amount: '', paymentMethod: '', message: '' });
-      setError('');
-    } catch (error) {
-      console.error('Error submitting donation:', error);
-      setError('An error occurred. Please try again.');
-      setSuccess('');
+      // Submit donation
+      const donationResponse = await axios.post(`${apiUrl}/api/donations`, formData);
+      setSuccess('Donation submitted successfully!');
+
+      // Create chat session with validated data
+      const userName = formData.name.trim() || 'Anonymous';
+      const userId = formData.email.trim() || `anonymous-${Date.now()}@noemail.com`;
+      const chatResponse = await axios.post(`${apiUrl}/api/chats`, {
+        userName,
+        userId,
+      });
+
+      if (!chatResponse.data.chatId) {
+        throw new Error('No chatId returned from server');
+      }
+
+      // Connect to Socket.io
+      const socket = io(apiUrl);
+      socket.emit('join-chat', chatResponse.data.chatId);
+      socket.emit('send-message', {
+        chatId: chatResponse.data.chatId,
+        text: `Hello, I just submitted a donation of $${formData.amount}. Please provide payment details (e.g., PayPal or bank info).`,
+        sender: 'user',
+      });
+
+      // Redirect to SmartHub chat
+      navigate(`/smarthub-chat/${chatResponse.data.chatId}`, {
+        state: { userName, userId },
+      });
+    } catch (err) {
+      console.error('Donation or chat error:', err.response?.data || err.message);
+      setError(err.response?.data?.error || 'Error submitting donation or starting chat');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit} className="donation-form">
-      {success && <p className="success">{success}</p>}
+    <div className="donation-form-container">
+      <h2>Make a Donation</h2>
       {error && <p className="error">{error}</p>}
-      <label>
-        Name:
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Email:
-        <input
-          type="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Donation Amount ($):
-        <input
-          type="number"
-          name="amount"
-          value={formData.amount}
-          onChange={handleChange}
-          required
-        />
-      </label>
-      <label>
-        Payment Method:
-        <select
-          name="paymentMethod"
-          value={formData.paymentMethod}
-          onChange={handleChange}
-          required
-        >
-          <option value="">-- Select Payment Method --</option>
-          <option value="paypal">PayPal</option>
-          <option value="credit_card">Credit/Debit Card</option>
-          <option value="bank_transfer">Bank Transfer</option>
-          <option value="crypto">Cryptocurrency</option>
-        </select>
-      </label>
-      <label>
-        Message (Optional):
-        <textarea
-          name="message"
-          value={formData.message}
-          onChange={handleChange}
-        />
-      </label>
-      <button type="submit">Donate</button>
-    </form>
+      {success && <p className="success">{success}</p>}
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Name</label>
+          <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Your Name" />
+        </div>
+        <div>
+          <label>Email</label>
+          <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Your Email" required />
+        </div>
+        <div>
+          <label>Amount ($)</label>
+          <input type="number" name="amount" value={formData.amount} onChange={handleChange} required />
+        </div>
+        <div>
+          <label>Payment Method</label>
+          <select name="paymentMethod" value={formData.paymentMethod} onChange={handleChange}>
+            <option value="PayPal">PayPal</option>
+            <option value="Credit Card">Credit Card</option>
+            <option value="Bank Transfer">Bank Transfer</option>
+          </select>
+        </div>
+        <div>
+          <label>Message (Optional)</label>
+          <textarea name="message" value={formData.message} onChange={handleChange} placeholder="Your Message" />
+        </div>
+        <button type="submit">Donate & Request Payment Info</button>
+      </form>
+    </div>
   );
-}
+};
 
 export default DonationForm;

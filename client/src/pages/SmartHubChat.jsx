@@ -1,92 +1,71 @@
+// client/src/pages/SmartHubChat.js
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import { useParams, useLocation } from 'react-router-dom';
+import { io } from 'socket.io-client';
 import axios from 'axios';
-import '../styles/SmartHubChat.css'; // New CSS file
+import '../styles/SmartHubChat.css';
 
 const SmartHubChat = () => {
-  const [socket, setSocket] = useState(null);
-  const [chatId, setChatId] = useState(null);
+  const { chatId } = useParams();
+  const { state } = useLocation();
   const [messages, setMessages] = useState([]);
   const [message, setMessage] = useState('');
-  const [userName, setUserName] = useState(''); // From donation form or prompt
-  const [userId, setUserId] = useState(''); // e.g., email or anonymous
-  const [loading, setLoading] = useState(true);
+  const [socket, setSocket] = useState(null);
+  const [error, setError] = useState('');
 
   useEffect(() => {
-    // Prompt for user details if not passed from Donate
-    if (!userName || !userId) {
-      const name = prompt('Enter your name for chat:');
-      const id = prompt('Enter your email (or "anonymous"):');
-      setUserName(name);
-      setUserId(id || 'anonymous');
-    }
-
-    // Create chat
-    const createChat = async () => {
-      try {
-        const res = await axios.post('http://localhost:5000/api/chats', { userName, userId });
-        setChatId(res.data.chatId);
-      } catch (err) {
-        console.error('Error creating chat');
-      }
-    };
-
-    if (userName && userId) {
-      createChat();
-    }
-
-    // Connect to Socket.io
-    const newSocket = io('http://localhost:5000');
+    const newSocket = io(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}`);
     setSocket(newSocket);
 
-    return () => newSocket.close();
-  }, [userName, userId]);
+    newSocket.emit('join-chat', chatId);
 
-  useEffect(() => {
-    if (socket && chatId) {
-      socket.emit('join-chat', chatId);
+    newSocket.on('new-message', (msg) => {
+      setMessages((prev) => [...prev, msg]);
+    });
 
-      socket.on('new-message', (msg) => {
-        setMessages((prev) => [...prev, msg]);
-      });
+    newSocket.on('error', (err) => {
+      setError(err);
+    });
 
-      socket.on('error', (err) => {
-        alert(err);
-      });
-    }
-  }, [socket, chatId]);
+    return () => {
+      newSocket.disconnect();
+    };
+  }, [chatId]);
 
-  const sendMessage = (e) => {
+  const sendMessage = async (e) => {
     e.preventDefault();
-    if (message.trim() && socket && chatId) {
-      socket.emit('send-message', { chatId, text: message, sender: 'user' });
+    if (!message.trim()) return;
+
+    try {
+      socket.emit('send-message', {
+        chatId,
+        text: message,
+        sender: 'user',
+      });
       setMessage('');
+    } catch (err) {
+      setError('Error sending message');
     }
   };
 
-  if (loading) return <div>Loading chat...</div>;
-
   return (
-    <div className="chat-container">
-      <header className="chat-header">
-        <h2>SmartHub Support - Payment Info</h2>
-        <p>Chat with admin for donation details (e.g., bank/PayPal info).</p>
-      </header>
-      <div className="messages">
-        {messages.map((msg, idx) => (
-          <div key={idx} className={`message ${msg.sender}`}>
-            <strong>{msg.sender === 'user' ? 'You' : 'Admin'}:</strong> {msg.text}
-            <span className="timestamp">{new Date(msg.timestamp).toLocaleTimeString()}</span>
+    <div className="smarthub-chat-container">
+      <h2>Chat with Support</h2>
+      {error && <p className="error">{error}</p>}
+      <div className="chat-messages">
+        {messages.map((msg, index) => (
+          <div key={index} className={`message ${msg.sender}`}>
+            <p>{msg.text}</p>
+            <span>{new Date(msg.timestamp).toLocaleTimeString()}</span>
           </div>
         ))}
       </div>
-      <form onSubmit={sendMessage} className="message-form">
+      <form onSubmit={sendMessage}>
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Type your message..."
-          required
         />
         <button type="submit">Send</button>
       </form>
